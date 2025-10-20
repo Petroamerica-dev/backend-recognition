@@ -24,7 +24,8 @@ export const behaviorMapper = (behavior: Comportamiento): Behavior => {
         valueId: behavior.ID_VALOR,
         description: behavior.DESCRIPCION,
         suggestionText: behavior.TEXTO_SUGERENCIA,
-        whenApplied: behavior.CUANDO_APLICA
+        whenApplied: behavior.CUANDO_APLICA,
+        active: behavior.FLAG_ACTIVO === 1
     };
 };
 

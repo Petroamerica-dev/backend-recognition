@@ -59,12 +59,14 @@ class ExcelService {
     }
 
     async getBehaviors(): Promise<Behavior[]> {
-        return this.getSheet('COMPORTAMIENTOS').map(behaviorMapper);
+        const comportamientos = this.getSheet('COMPORTAMIENTOS') as Comportamiento[];
+        console.log(comportamientos)
+        return comportamientos.map(behaviorMapper);
     }
 
     async getBehaviorsByValue(idValor: number): Promise<Behavior[]> {
         const comportamientos = this.getSheet('COMPORTAMIENTOS') as Comportamiento[];
-        return comportamientos.filter((c: Comportamiento) => c.ID_VALOR === idValor).map(behaviorMapper);
+        return comportamientos.filter((c: Comportamiento) => c.ID_VALOR === idValor && c.FLAG_ACTIVO).map(behaviorMapper);
     }
 
     async getRecognitions(): Promise<Recognition[]> {

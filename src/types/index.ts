@@ -31,6 +31,7 @@ export interface Comportamiento {
     DESCRIPCION: string;
     TEXTO_SUGERENCIA: string;
     CUANDO_APLICA: string;
+    FLAG_ACTIVO: number;
 }
 
 export interface Reconocimiento {
@@ -63,6 +64,7 @@ export interface Behavior {
     description: string;
     suggestionText: string;
     whenApplied: string;
+    active: boolean;
 }
 
 export interface Recognition {
