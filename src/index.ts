@@ -4,7 +4,8 @@ import { PORT, FRONTEND_URL } from './config';
 import { errorHandler } from './middlewares/error.middleware';
 import authRoutes from './routes/auth.routes';
 import protectedRoutes from './routes/protected.routes';
-
+import https from 'https';
+import fs from 'fs';
 
 const app: Application = express();
 
@@ -26,6 +27,9 @@ app.get('/health', (req, res) => {
 
 app.use(errorHandler);
 
-app.listen(port, () => {
-    console.log(`🚀 Server running on http://localhost:${port}`);
+https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+}, app).listen(port, () => {
+    console.log(`🚀 Server running on https://192.168.1.12:${port}`);
 });
