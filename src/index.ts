@@ -9,7 +9,7 @@ import fs from 'fs';
 
 const app: Application = express();
 
-const port = PORT || 4505;
+const port = Number(PORT) || 4505;
 
 app.use(cors({
     origin: FRONTEND_URL || 'http://localhost:5173',
@@ -30,6 +30,6 @@ app.use(errorHandler);
 https.createServer({
     key: fs.readFileSync('server.key'),
     cert: fs.readFileSync('server.cert')
-}, app).listen(port, () => {
-    console.log(`🚀 Server running on https://192.168.1.12:${port}`);
+}, app).listen(port, '0.0.0.0', () => {
+    console.log(`🚀 Server running on https://localhost:${port}`);
 });
