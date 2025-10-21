@@ -4,15 +4,13 @@ import { PORT, FRONTEND_URL } from './config';
 import { errorHandler } from './middlewares/error.middleware';
 import authRoutes from './routes/auth.routes';
 import protectedRoutes from './routes/protected.routes';
-import https from 'https';
-import fs from 'fs';
 
 const app: Application = express();
 
-const port = Number(PORT) || 4505;
+const port = PORT || 4505;
 
 app.use(cors({
-    origin: "*",
+    origin: FRONTEND_URL || 'http://localhost:5173',
     credentials: true
 }));
 app.use(express.json());
@@ -27,9 +25,6 @@ app.get('/health', (req, res) => {
 
 app.use(errorHandler);
 
-https.createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')
-}, app).listen(port, '0.0.0.0', () => {
-    console.log(`🚀 Server running on https://localhost:${port}`);
+app.listen(port, () => {
+    console.log(`🚀 Server running on http://localhost:${port}`);
 });
