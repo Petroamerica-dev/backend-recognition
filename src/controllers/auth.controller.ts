@@ -18,7 +18,7 @@ export const login = (_: Request, res: Response) => {
 
 export const callback = async (req: Request, res: Response) => {
     const { code } = req.query;
-    const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:4504';
 
     if (!code) {
         return res.redirect(`${FRONTEND_URL}/login?error=no_code`);
