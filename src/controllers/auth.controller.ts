@@ -21,7 +21,7 @@ export const callback = async (req: Request, res: Response) => {
     const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:4504';
 
     if (!code) {
-        return res.redirect(`${FRONTEND_URL}/login?error=no_code`);
+        return res.redirect(`${FRONTEND_URL}/reconocimiento/login?error=no_code`);
     }
 
     try {
@@ -51,7 +51,7 @@ export const callback = async (req: Request, res: Response) => {
         const user = await excelService.getUserByEmail(userEmail);
 
         if (!user) {
-            return res.redirect(`${FRONTEND_URL}/login?error=unauthorized`);
+            return res.redirect(`${FRONTEND_URL}/reconocimiento/login?error=unauthorized`);
         }
 
         const accessToken = jwt.sign(
@@ -82,11 +82,11 @@ export const callback = async (req: Request, res: Response) => {
             }
         })).toString('base64');
 
-        res.redirect(`${FRONTEND_URL}/auth/callback?token=${authData}`);
+        res.redirect(`${FRONTEND_URL}/reconocimiento/auth/callback?token=${authData}`);
 
     } catch (error: any) {
         console.error('Error en callback:', error.response?.data || error.message);
-        res.redirect(`${FRONTEND_URL}/login?error=auth_failed`);
+        res.redirect(`${FRONTEND_URL}/reconocimiento/login?error=auth_failed`);
     }
 };
 
