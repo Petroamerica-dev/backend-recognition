@@ -39,8 +39,7 @@ export const getValues = async (req: AuthRequest, res: Response) => {
     try {
         const values = await excelService.getValues();
         const behaviors = await excelService.getBehaviors();
-        // console.log(JSON.stringify(behaviors, null, 2))
-
+        console.log(behaviors)
         const valuesResponse = values.map((value: Value) => {
             return {
                 ...value,
@@ -48,8 +47,6 @@ export const getValues = async (req: AuthRequest, res: Response) => {
                 behaviors: behaviors.filter((behavior: Behavior) => behavior.valueId === value.valueId && behavior.active)
             };
         });
-
-        // console.log(JSON.stringify(valuesResponse, null, 2))
 
         res.json(valuesResponse);
     } catch (error) {

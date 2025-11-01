@@ -10,7 +10,7 @@ const app: Application = express();
 const port = PORT || 4505;
 
 app.use(cors({
-    origin: FRONTEND_URL || 'http://localhost:5173',
+    origin: [FRONTEND_URL || 'http://localhost:5173', 'http://localhost:4173'],
     credentials: true
 }));
 app.use(express.json());
