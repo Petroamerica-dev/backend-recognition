@@ -36,18 +36,21 @@ class ExcelService {
     }
 
     async getUserById(userId: string): Promise<User | undefined> {
+        this.reloadWorkbook(); 
         const usuarios = this.getSheet('USUARIOS') as Usuario[];
         const user = usuarios.find((u: Usuario) => u.ID_USUARIO.toString() === userId)
         return user ? userMapper(user) : undefined;
     }
 
     async getUserByEmail(userEmail: string): Promise<User | undefined> {
+        this.reloadWorkbook(); 
         const usuarios = this.getSheet('USUARIOS') as Usuario[];
         const user = usuarios.find((u: Usuario) => u.CORREO === userEmail)
         return user ? userMapper(user) : undefined;
     }
 
     async searchUser(searchTerm: string, currentPage: number, pageSize: number): Promise<User[]> {
+        this.reloadWorkbook();
         const usuarios = this.getSheet('USUARIOS') as Usuario[];
         const startIndex = (currentPage - 1) * pageSize;
         const endIndex = startIndex + pageSize;
@@ -55,25 +58,30 @@ class ExcelService {
     }
 
     async getValues(): Promise<Value[]> {
+        this.reloadWorkbook(); 
         return this.getSheet('VALORES').map(valueMapper);
     }
 
     async getBehaviors(): Promise<Behavior[]> {
+        this.reloadWorkbook(); 
         const comportamientos = this.getSheet('COMPORTAMIENTOS') as Comportamiento[];
         console.log(comportamientos)
         return comportamientos.map(behaviorMapper);
     }
 
     async getBehaviorsByValue(idValor: number): Promise<Behavior[]> {
+        this.reloadWorkbook(); 
         const comportamientos = this.getSheet('COMPORTAMIENTOS') as Comportamiento[];
         return comportamientos.filter((c: Comportamiento) => c.ID_VALOR === idValor && c.FLAG_ACTIVO).map(behaviorMapper);
     }
 
     async getRecognitions(): Promise<Recognition[]> {
+        this.reloadWorkbook(); 
         return this.getSheet('RECONOCIMIENTOS').map(recognitionMapper);
     }
 
     async getAllUsers(): Promise<User[]> {
+        this.reloadWorkbook(); 
         return this.getSheet('USUARIOS').map(userMapper);
     }
 
@@ -106,6 +114,8 @@ class ExcelService {
 
         XLSX.writeFile(this.workbook, this.excelPath);
         console.log('✅ Reconocimiento guardado en Excel');
+        
+        this.reloadWorkbook();
     }
 
     async createRecognition(
@@ -115,6 +125,8 @@ class ExcelService {
         message: string
     ): Promise<{ success: boolean; recognition?: Recognition; error?: string }> {
         try {
+            this.reloadWorkbook();
+            
             const newRecognition: Reconocimiento = {
                 ID_RECONOCIMIENTO: this.getNextId(),
                 ID_USUARIO_ENVIA: senderId,
@@ -125,8 +137,8 @@ class ExcelService {
                 ESTADO_CORREO: "NO ENVIADO"
             };
 
-            this.saveToExcel(newRecognition);
-            this.reloadWorkbook();
+            await this.saveToExcel(newRecognition);
+            
             return {
                 success: true,
                 recognition: recognitionMapper(newRecognition)
@@ -140,7 +152,16 @@ class ExcelService {
         }
     }
 
+    async getRecognitionById(recognitionId: number): Promise<Recognition | undefined> {
+        this.reloadWorkbook();
+        const reconocimientos = this.getSheet('RECONOCIMIENTOS') as Reconocimiento[];
+        const recognition = reconocimientos.find((r: Reconocimiento) => r.ID_RECONOCIMIENTO === recognitionId);
+        return recognition ? recognitionMapper(recognition) : undefined;
+    }
+
     async updateRecognitionEmailStatus(recognitionId: number, status: string): Promise<void> {
+        this.reloadWorkbook();
+        
         if (!this.workbook) {
             throw new Error('Workbook no cargado');
         }
@@ -159,6 +180,8 @@ class ExcelService {
 
         XLSX.writeFile(this.workbook, this.excelPath);
         console.log('✅ Estado del correo actualizado en Excel');
+        
+        this.reloadWorkbook();
     }
 
     reloadWorkbook() {

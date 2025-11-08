@@ -39,7 +39,6 @@ export const getValues = async (req: AuthRequest, res: Response) => {
     try {
         const values = await excelService.getValues();
         const behaviors = await excelService.getBehaviors();
-        console.log(behaviors)
         const valuesResponse = values.map((value: Value) => {
             return {
                 ...value,
@@ -67,12 +66,25 @@ export const postRecognition = async (req: AuthRequest, res: Response) => {
 
 export const sendEmail = async (req: AuthRequest, res: Response) => {
     try {
-        const { recognitionId, to, copy, recognition, comentary } = req.body;
+        const { recognitionId, to, recognition, comentary } = req.body;
+        
+        let copy = ''
+        
+        const senderId = await excelService.getRecognitionById(recognitionId).then(recognition => recognition!.senderId);
+        const bossId = await excelService.getUserByEmail(to).then(user => user?.bossId);
+        
+        if (bossId && bossId !== senderId) {
+            const boss = await excelService.getUserById(bossId.toString());
+            if (boss) {
+                copy = boss.email;
+            }
+        }
+
         const email = await emailService.sendRecognitionEmail({
             to,
-            copy,
             recognition,
-            comentary
+            comentary,
+            copy
         });
 
         if (email) {

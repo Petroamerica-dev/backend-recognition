@@ -11,5 +11,10 @@ export const {
     JWT_REFRESH_SECRET,
     FRONTEND_URL,
     OUTLOOK_EMAIL,
-    OUTLOOK_PASSWORD
+    OUTLOOK_PASSWORD,
+    DB_HOST,
+    DB_PORT,
+    DB_USER,
+    DB_PASSWORD,
+    DB_NAME
 } = process.env;

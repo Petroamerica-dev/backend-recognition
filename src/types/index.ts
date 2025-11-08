@@ -16,6 +16,7 @@ export interface Usuario {
     CORREO: string;
     NOMBRE: string;
     ID_JEFE: number;
+    
 }
 
 export interface Valor {
