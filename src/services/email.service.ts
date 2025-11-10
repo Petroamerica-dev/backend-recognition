@@ -34,8 +34,6 @@ export class EmailService {
                 html: emailData.html
             }
 
-            console.log(JSON.stringify(mailOptions, null, 2));
-
             await this.transporter?.sendMail(mailOptions);
             console.log('✅ Email enviado correctamente a:', emailData.to);
             return true;

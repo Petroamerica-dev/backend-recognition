@@ -23,7 +23,6 @@ export class UserController {
     };
 
     searchUsers = async (req: Request, res: Response): Promise<void> => {
-        console.log("searching")
         const {
             searchTerm,
             currentPage,
