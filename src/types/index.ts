@@ -4,10 +4,10 @@ export type CoreValueType = "Eficiencia" | "Liderazgo" | "Trabajo en Equipo";
 
 export interface AuthRequest extends Request {
     user?: {
-        userId: number;
+        user_id: number;
         email: string;
         name: string;
-        bossId: number;
+        boss_id: number;
     };
 }
 

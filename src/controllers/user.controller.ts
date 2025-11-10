@@ -10,8 +10,8 @@ export class UserController {
     };
 
     getUserById = async (req: Request, res: Response): Promise<void> => {
-        const userId = parseInt(req.params.id);
-        const user = await this.userService.getUserById(userId);
+        const user_id = parseInt(req.params.id);
+        const user = await this.userService.getUserById(user_id);
 
         res.status(200).json(user);
     };

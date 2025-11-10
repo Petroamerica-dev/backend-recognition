@@ -5,7 +5,7 @@ import { authMiddleware } from "../middlewares/auth.middleware";
 
 export const createCoreValueRouter = (coreValueController: CoreValueController): Router => {
     const router = Router();
-    // router.use(authMiddleware);
+    router.use(authMiddleware);
     router.get('/', asyncHandler(coreValueController.getAllCoreValues))
     return router;
 }

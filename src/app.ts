@@ -1,11 +1,11 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import { errorHandler } from './middlewares/error.middleware';
-import authRoutes from './routes/auth.routes';
+import { createAuthRouter } from './routes/auth.routes';
 import { FRONTEND_URL, PORT } from './config/env';
 
 import { createUserRouter } from './routes/user.routes';
-import { coreValueController, emailController, recognitionController, userController } from './config/instances';
+import { authController, coreValueController, emailController, recognitionController, userController } from './config/instances';
 import { createCoreValueRouter } from './routes/core_value.routes';
 import { createRecognitionRouter } from './routes/recognition.routes';
 import { createEmailRouter } from './routes/email.routes';
@@ -33,7 +33,7 @@ export const createApp = (): Application => {
     app.use('/api/core-values', createCoreValueRouter(coreValueController));
     app.use('/api/recognitions', createRecognitionRouter(recognitionController));
     app.use('/api/emails', createEmailRouter(emailController));
-    // app.use('/api/auth', authRoutes);
+    app.use('/api/auth', createAuthRouter(authController));
 
     app.use(errorHandler);
     return app;

@@ -9,8 +9,8 @@ export class UserService {
         return await this.userRepository.findAll();
     }
 
-    async getUserById(userId: number): Promise<User | null> {
-        const user = await this.userRepository.findById(userId);
+    async getUserById(user_id: number): Promise<User | null> {
+        const user = await this.userRepository.findById(user_id);
         if(!user){
             throw new AppError('Usuario no encontrado', 404);
         }

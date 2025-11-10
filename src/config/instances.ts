@@ -12,6 +12,7 @@ import { RecognitionService } from '../services/recognition.service';
 import { RecognitionController } from '../controllers/recognition.controller';
 import { EmailService } from '../services/email.service';
 import { EmailController } from '../controllers/email.controller';
+import { AuthController } from '../controllers/auth.controller';
 
 const userRepository = new UserRepository(pool);
 export const userService = new UserService(userRepository);
@@ -31,3 +32,5 @@ export const recognitionController = new RecognitionController(recognitionServic
 
 export const emailService = new EmailService();
 export const emailController = new EmailController(emailService);
+
+export const authController = new AuthController();
