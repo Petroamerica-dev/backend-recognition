@@ -3,6 +3,7 @@ import { CoreValueType } from '../types';
 import { userService, recognitionService, behaviorService } from '../config/instances';
 import { EmailService } from '../services/email.service';
 import { EmailSendingRequest } from '../types/email';
+import { buildEmail } from '../utils/email';
 
 export class EmailController {
 
@@ -30,11 +31,16 @@ export class EmailController {
                 }
             }
 
+            const html = buildEmail({
+                behavior,
+                senderName: sender.name,
+                message: emailData.message
+            })
+
             const email = await this.emailService.sendRecognitionEmail({
                 to: receiver.email,
-                recognition: behavior.core_value_name as CoreValueType,
-                message: emailData.message,
-                copy
+                copy,
+                html,
             });
 
             if (email) {

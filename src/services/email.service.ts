@@ -31,27 +31,12 @@ export class EmailService {
                 to: emailData.to,
                 cc: emailData.copy,
                 subject: '¡Has recibido un reconocimiento por tu trabajo!',
-                html: `
-                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                        <h2 style="color: #0078d4;">¡Felicidades! Has recibido un reconocimiento</h2>
-                        <div style="background-color: #f3f2f1; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                            <p style="font-size: 16px; line-height: 1.6; color: #323130;">
-                                ${emailData.recognition}
-                            </p>
-                        </div>
-                            <p style="font-size: 14px; line-height: 1.6; color: #ccc;">
-                                ${emailData.message}
-                            </p>
-                        <p style="color: #605e5c; font-size: 14px;">
-                            Sigue así, tu trabajo es valorado por el equipo.
-                        </p>
-                    </div>
-                `
+                html: emailData.html
             }
 
             console.log(JSON.stringify(mailOptions, null, 2));
 
-            // await this.transporter?.sendMail(mailOptions);
+            await this.transporter?.sendMail(mailOptions);
             console.log('✅ Email enviado correctamente a:', emailData.to);
             return true;
         } catch (error) {

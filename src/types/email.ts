@@ -3,9 +3,8 @@ import { CreateRecognitionDTO } from "./recognition";
 
 export interface EmailData {
     to: string;
+    html: string;
     copy?: string;
-    recognition: CoreValueType;
-    message?: string;
 }
 
 export interface EmailSendingRequest extends CreateRecognitionDTO {
