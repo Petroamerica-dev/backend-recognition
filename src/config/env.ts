@@ -12,10 +12,6 @@ export const {
     FRONTEND_URL,
     OUTLOOK_EMAIL,
     OUTLOOK_PASSWORD,
-    DB_HOST,
-    DB_PORT,
-    DB_USER,
-    DB_PASSWORD,
-    DB_NAME,
+    DATABASE_URL,
     NODE_ENV
 } = process.env;

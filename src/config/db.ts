@@ -1,20 +1,18 @@
 import pg from 'pg';
-import { DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER } from './env';
+import { DATABASE_URL, NODE_ENV } from './env';
 
 const { Pool } = pg;
 
 export const pool = new Pool({
-    host: DB_HOST,
-    port: Number(DB_PORT),
-    user: DB_USER,
-    password: DB_PASSWORD,
-    database: DB_NAME,
+    connectionString: DATABASE_URL,
+    ssl: NODE_ENV === 'production' ? {
+        rejectUnauthorized: false
+    } : false,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000,
     max: 20,
     min: 2
 });
-
 
 pool.on('error', (err) => {
     console.error('Error inesperado en el cliente de PostgreSQL', err);

@@ -1,6 +1,6 @@
 import { createApp } from "./app"
 import { testConnection } from "./config/db";
-import { PORT, NODE_ENV, DB_NAME } from "./config/env";
+import { PORT, NODE_ENV } from "./config/env";
 
 const startServer = async () => {
     try {
@@ -9,7 +9,7 @@ const startServer = async () => {
         app.listen(PORT, () => {
             console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
             console.log(`📝 Environment: ${NODE_ENV}`);
-            console.log(`📊 Database: ${DB_NAME}`);
+            console.log(`📊 Database conected`);
         })
     } catch (error) {
         console.error('❌ Error al iniciar el servidor:', error);
