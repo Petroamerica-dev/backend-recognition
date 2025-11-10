@@ -1,8 +1,8 @@
 import nodemailer from 'nodemailer'
-import { OUTLOOK_EMAIL, OUTLOOK_PASSWORD } from '../config';
-import { EmailData } from '../types';
+import { OUTLOOK_EMAIL, OUTLOOK_PASSWORD } from '../config/env';
+import { EmailData } from '../types/email';
 
-class EmailService {
+export class EmailService {
     private transporter: nodemailer.Transporter | null = null;
 
     constructor() {
@@ -30,7 +30,7 @@ class EmailService {
                 from: OUTLOOK_EMAIL,
                 to: emailData.to,
                 cc: emailData.copy,
-                subject: '🎉 Has recibido un reconocimiento',
+                subject: '¡Has recibido un reconocimiento por tu trabajo!',
                 html: `
                     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
                         <h2 style="color: #0078d4;">¡Felicidades! Has recibido un reconocimiento</h2>
@@ -40,7 +40,7 @@ class EmailService {
                             </p>
                         </div>
                             <p style="font-size: 14px; line-height: 1.6; color: #ccc;">
-                                ${emailData.comentary}
+                                ${emailData.message}
                             </p>
                         <p style="color: #605e5c; font-size: 14px;">
                             Sigue así, tu trabajo es valorado por el equipo.
@@ -49,7 +49,9 @@ class EmailService {
                 `
             }
 
-            await this.transporter?.sendMail(mailOptions);
+            console.log(JSON.stringify(mailOptions, null, 2));
+
+            // await this.transporter?.sendMail(mailOptions);
             console.log('✅ Email enviado correctamente a:', emailData.to);
             return true;
         } catch (error) {

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { excelService } from '../services/excel.service';
-import { JWT_SECRET, JWT_REFRESH_SECRET, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_REDIRECT_URI, AZURE_TENANT } from '../config';
+import { JWT_SECRET, JWT_REFRESH_SECRET, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_REDIRECT_URI, AZURE_TENANT } from '../config/env';
 
 export const login = (_: Request, res: Response) => {
     const authUrl = `https://login.microsoftonline.com/${AZURE_TENANT}/oauth2/v2.0/authorize?` +
