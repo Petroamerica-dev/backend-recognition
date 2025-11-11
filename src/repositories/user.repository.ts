@@ -36,18 +36,19 @@ export class UserRepository {
         return result.rows[0] || null;
     }
 
-    async searchUser(searchTerm: string, currentPage: number, pageSize: number): Promise<User[]> {
-        const offset = (currentPage - 1) * pageSize;
-        const query = `
-            SELECT *
-            FROM users
-            WHERE name ILIKE $1 OR email ILIKE $1
-            ORDER BY name
-            LIMIT $2 OFFSET $3
-        `;
-        const values = [`%${searchTerm}%`, pageSize, offset];
+  async searchUser(searchTerm: string, currentPage: number, pageSize: number, excludeUserId: number): Promise<User[]> {
+    const offset = (currentPage - 1) * pageSize;
+    const query = `
+        SELECT *
+        FROM users
+        WHERE (name ILIKE $1 OR email ILIKE $1)
+        AND user_id != $2
+        ORDER BY name
+        LIMIT $3 OFFSET $4
+    `;
+    const values = [`%${searchTerm}%`, excludeUserId, pageSize, offset];
 
-        const result: QueryResult<User> = await this.pool.query(query, values);
-        return result.rows;
-    }
+    const result: QueryResult<User> = await this.pool.query(query, values);
+    return result.rows;
+}
 }

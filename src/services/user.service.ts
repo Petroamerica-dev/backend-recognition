@@ -39,7 +39,7 @@ export class UserService {
         return boss;
     }
 
-    async searchUser(searchTerm: string, currentPage: number, pageSize: number):Promise<User[]> {
-        return await this.userRepository.searchUser(searchTerm, currentPage, pageSize);
+    async searchUser(searchTerm: string, currentPage: number, pageSize: number, excludeUserId: number):Promise<User[]> {
+        return await this.userRepository.searchUser(searchTerm, currentPage, pageSize, excludeUserId);
     }
 }

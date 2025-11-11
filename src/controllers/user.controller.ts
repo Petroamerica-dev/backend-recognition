@@ -26,9 +26,10 @@ export class UserController {
         const {
             searchTerm,
             currentPage,
-            pageSize
+            pageSize,
+            excludeUserId
         } = req.query;
-        const users = await this.userService.searchUser(searchTerm as string,  Number(currentPage), Number(pageSize));
+        const users = await this.userService.searchUser(searchTerm as string,  Number(currentPage), Number(pageSize), Number(excludeUserId));
 
         res.status(200).json(users);
     };
