@@ -9,7 +9,7 @@ export const pool = new Pool({
         rejectUnauthorized: false
     } : false,
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000,
+    connectionTimeoutMillis: 20000,
     max: 20,
     min: 2
 });
