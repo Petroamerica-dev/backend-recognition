@@ -1,6 +1,5 @@
 import { Pool, QueryResult } from "pg";
-import { CreateRecognitionDTO, RecognitionWithDetail, UpdateRecognitionDTO } from "../types/recognition";
-import { Recognition } from "../types";
+import { CreateRecognitionDTO, Recognition, RecognitionWithDetail, UpdateRecognitionDTO } from "../types/recognition";
 
 export class RecognitionRepository {
 

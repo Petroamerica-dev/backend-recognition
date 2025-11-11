@@ -1,7 +1,6 @@
 import { behaviorService, userService } from "../config/instances";
 import { RecognitionRepository } from "../repositories/recognition.repository";
-import { Recognition } from "../types";
-import { CreateRecognitionDTO, UpdateRecognitionDTO } from "../types/recognition";
+import { CreateRecognitionDTO, Recognition, UpdateRecognitionDTO } from "../types/recognition";
 import { AppError } from "../utils/errors";
 
 export class RecognitionService {

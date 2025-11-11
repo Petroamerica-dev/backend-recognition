@@ -1,4 +1,3 @@
-import { CoreValueType } from ".";
 import { CreateRecognitionDTO } from "./recognition";
 
 export interface EmailData {
