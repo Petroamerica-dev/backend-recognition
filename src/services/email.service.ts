@@ -12,15 +12,15 @@ export class EmailService {
     private initializeMailer() {
         this.transporter = nodemailer.createTransport({
             host: 'smtp-mail.outlook.com',
-            port: 587,
+            port: 25,
             secure: false,
             auth: {
                 user: OUTLOOK_EMAIL,
                 pass: OUTLOOK_PASSWORD
             },
-            tls: {
-                ciphers: 'SSLv3'
-            }
+            // tls: {
+            //     ciphers: 'SSLv3'
+            // }
         });
     }
 

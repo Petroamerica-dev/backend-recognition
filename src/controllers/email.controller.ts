@@ -1,5 +1,4 @@
 import { Response, Request } from 'express';
-import { CoreValueType } from '../types';
 import { userService, recognitionService, behaviorService } from '../config/instances';
 import { EmailService } from '../services/email.service';
 import { EmailSendingRequest } from '../types/email';

@@ -13,5 +13,6 @@ export const {
     OUTLOOK_EMAIL,
     OUTLOOK_PASSWORD,
     DATABASE_URL,
-    NODE_ENV
+    NODE_ENV,
+    RESEND_API_KEY
 } = process.env;
