@@ -134,7 +134,10 @@ export class RecognitionRepository {
                 b.description AS behavior_description,
                 cv.name AS core_value_name,
                 u.user_id AS receiver_id,
-                boss.email AS copy
+                CASE 
+                    WHEN r.sender_id = u.boss_id THEN NULL 
+                    ELSE boss.email 
+                END AS copy
             FROM recognitions r
             INNER JOIN users s ON r.sender_id = s.user_id
             INNER JOIN users u ON r.receiver_id = u.user_id
