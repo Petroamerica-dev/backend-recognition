@@ -24,13 +24,10 @@ export class EmailService {
         // });
     }
 
-    async sendRecognitionEmail(emailData: EmailData): Promise<boolean> {
+    async sendRecognitionEmail(): Promise<boolean> {
         try {
-            console.log('Simulando envío de correo a:', emailData.to);
-
             await new Promise((resolve) => setTimeout(resolve, 5000));
 
-            console.log('✅ Simulación de envío completada a:', emailData.to);
             return true;
         } catch (error) {
             console.error('Error al enviar correo electrónico:', error);
