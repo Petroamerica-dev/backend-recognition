@@ -1,5 +1,6 @@
 import { behaviorService, userService } from "../config/instances";
 import { RecognitionRepository } from "../repositories/recognition.repository";
+import { PendingEmail } from "../types/email";
 import { CreateRecognitionDTO, Recognition, UpdateRecognitionDTO } from "../types/recognition";
 import { AppError } from "../utils/errors";
 
@@ -32,5 +33,9 @@ export class RecognitionService {
         }
 
         return updatedRecognition;
+    }
+
+    async getPendingRecognitions (): Promise<PendingEmail[]> {
+        return await this.recognitionRepository.selectPendingRecognitions();
     }
 }

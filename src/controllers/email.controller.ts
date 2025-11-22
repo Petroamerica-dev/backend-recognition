@@ -31,7 +31,10 @@ export class EmailController {
             }
 
             const html = buildEmail({
-                behavior,
+                behavior: {
+                    core_value_name: behavior.core_value_name,
+                    description: behavior.description
+                },
                 senderName: sender.name,
                 message: emailData.message
             })
@@ -54,4 +57,34 @@ export class EmailController {
             res.status(500).json({ error: 'Error al enviar correo electrónico' });
         }
     };
+
+    getPendingEmails = async (req: Request, res: Response): Promise<any> => {
+        try {
+            const result = [];
+            const emails = await recognitionService.getPendingRecognitions();
+            emails.map(e => {
+                let copy = ''
+
+                const boss = userService.getBossBySubordinateId(e.receiver_id);
+                const html = buildEmail({
+                    behavior: {
+                        core_value_name: e.core_value_name,
+                        description: e.behavior_description
+                    },
+                    senderName: e.sender_name,
+                    message: e.message
+                })
+                const email = {
+                    to: e.receiver_email,
+                    html,
+                    copy: e.sender_email
+                }
+                result.push(email);
+            })
+            res.json(emails);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Error al obtener emails pendientes' });
+        }
+    }
 }

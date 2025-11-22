@@ -1,5 +1,6 @@
 import { Pool, QueryResult } from "pg";
 import { CreateRecognitionDTO, Recognition, RecognitionWithDetail, UpdateRecognitionDTO } from "../types/recognition";
+import { PendingEmail } from "../types/email";
 
 export class RecognitionRepository {
 
@@ -119,5 +120,32 @@ export class RecognitionRepository {
         const query = 'SELECT * FROM recognitions WHERE recognition_id = $1';
         const result: QueryResult<Recognition> = await this.pool.query(query, [recognitionId]);
         return result.rows[0] || null;
+    }
+
+
+    async selectPendingRecognitions(): Promise<PendingEmail[]> {
+        const query = `
+            SELECT 
+                r.recognition_id,
+                r.message,
+                sender.name AS sender_name,
+                sender.email AS sender_email,
+                receiver.user_id AS receiver_id,
+                receiver.name AS receiver_name,
+                receiver.email AS receiver_email,
+                b.description AS behavior_description,
+                cv.name AS core_value_name
+            FROM recognitions r
+            INNER JOIN users sender ON r.sender_id = sender.user_id
+            INNER JOIN users receiver ON r.receiver_id = receiver.user_id
+            INNER JOIN behaviors b ON r.behavior_id = b.behavior_id
+            INNER JOIN core_values cv ON b.core_value_id = cv.core_value_id;
+
+            WHERE status = 'pendiente'
+            ORDER BY created_at DESC;
+        `;
+
+        const result: QueryResult = await this.pool.query(query);
+        return result.rows;
     }
 }

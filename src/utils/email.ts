@@ -1,7 +1,10 @@
 import { BehaviorWithDetail } from "../types/behavior";
 
 interface EmailContentParams {
-    behavior: BehaviorWithDetail;
+    behavior: {
+        core_value_name: string;
+        description: string;
+    };
     message?: string;
     senderName: string;
 }
