@@ -1,7 +1,10 @@
 import { BehaviorWithDetail } from "../types/behavior";
 
 interface EmailContentParams {
-    behavior: BehaviorWithDetail;
+    behavior: {
+        core_value_name: string;
+        description: string;
+    };
     message?: string;
     senderName: string;
 }
@@ -38,8 +41,8 @@ export const buildEmail = (params: EmailContentParams) => {
     return (` <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: ${color}; font-size: 27px;">${title}</h2>
         <p style="font-size: 16px; line-height: 1.6; color: #323130;">Por que cuando colaboramos logramos más.</p>
-        ${params.message ? 
-            `<p style="font-size: 16px; line-height: 1.6; color: #323130;">${params.senderName}:</p> <p style="font-size: 15px; line-height: 1.6; color: #353434;">"${params.message}"</p>`: 
+        ${params.message ?
+            `<p style="font-size: 16px; line-height: 1.6; color: #323130;">${params.senderName}:</p> <p style="font-size: 15px; line-height: 1.6; color: #353434;">"${params.message}"</p>` :
             `<p style="font-size: 16px; line-height: 1.6; color: #323130;">${params.senderName} quizo reconocer tu aporte por ${core_value}.</p>`
         }
         <div style="width: fit-content;padding: 7px 15px; background-color: ${color}; border-radius: 5px; margin: 20px 0; color: white;">

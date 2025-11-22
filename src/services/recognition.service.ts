@@ -1,6 +1,6 @@
 import { behaviorService, userService } from "../config/instances";
 import { RecognitionRepository } from "../repositories/recognition.repository";
-import { CreateRecognitionDTO, Recognition, UpdateRecognitionDTO } from "../types/recognition";
+import { CreateRecognitionDTO, PendingRecognition, Recognition, UpdateRecognitionDTO } from "../types/recognition";
 import { AppError } from "../utils/errors";
 
 export class RecognitionService {
@@ -21,16 +21,20 @@ export class RecognitionService {
     async udpateRecognition(recognitionId: number, recognitionData: UpdateRecognitionDTO): Promise<Recognition> {
         const existingRecognition = this.recognitionRepository.findById(recognitionId);
 
-        if(!existingRecognition) {
+        if (!existingRecognition) {
             throw new AppError('Reconocimiento no encontrado', 404);
         }
 
         const updatedRecognition = await this.recognitionRepository.update(recognitionId, recognitionData);
 
-        if(!updatedRecognition) {
+        if (!updatedRecognition) {
             throw new AppError('Error al actualizar el reconocimiento', 500);
         }
 
         return updatedRecognition;
+    }
+
+    async getPendingRecognitions(): Promise<PendingRecognition[]> {
+        return await this.recognitionRepository.selectPendingRecognitions();
     }
 }
